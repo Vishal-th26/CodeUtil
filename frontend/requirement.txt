@@ -1,0 +1,11 @@
+faiss-cpu
+sentence-transformers
+langchain
+langchain-community
+rank-bm25
+numpy
+torch
+transformers
+groq
+python-dotenv
+tqdm

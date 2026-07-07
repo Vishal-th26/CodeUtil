@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+.env
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Testing files
+backend/test_pipeline.py
+backend/praiser.ipynb
+
+# Generated files
+*.pkl
+*.index
+temp/
+sessions/
+
+backend/test_pipeline.py
