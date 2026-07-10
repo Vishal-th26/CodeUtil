@@ -56,6 +56,7 @@ def ask_groq_llm(context, question):
                 "content":prompt
             }
         ],
-        temperature= 0.2
+        temperature= 0.2,
+        reasoning_format="hidden"
     )
     return response.choices[0].message.content
