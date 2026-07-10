@@ -1,0 +1,49 @@
+.shell-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 224px 1fr;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.content {
+  padding: 30px 26px 48px;
+  min-width: 0;
+}
+
+.content > * {
+  animation: fade-in 0.25s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content > * {
+    animation: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .content {
+    padding: 22px 18px 36px;
+  }
+}

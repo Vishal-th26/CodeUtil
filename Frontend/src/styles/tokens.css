@@ -1,0 +1,46 @@
+:root {
+  /* --- surface --- */
+  --bg-void: #0b0d12;
+  --bg-panel: #12151c;
+  --bg-raised: #1a1e27;
+  --bg-inset: #0e1015;
+  --border: #242a36;
+  --border-soft: #1c212b;
+
+  /* --- accent: amber, the "indexed / live" signal --- */
+  --amber: #e8a33d;
+  --amber-dim: #8a6425;
+  --amber-soft: rgba(232, 163, 61, 0.1);
+  --amber-glow: rgba(232, 163, 61, 0.35);
+
+  /* --- text --- */
+  --text: #e7e9ee;
+  --text-dim: #b7bccb;
+  --muted: #868fa3;
+  --faint: #4d5566;
+
+  /* --- state --- */
+  --success: #4fd1a5;
+  --success-soft: rgba(79, 209, 165, 0.1);
+  --danger: #e8615a;
+  --danger-soft: rgba(232, 97, 90, 0.1);
+
+  /* --- type --- */
+  --font-display: "Space Grotesk", "IBM Plex Sans", sans-serif;
+  --font-sans: "IBM Plex Sans", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* --- shape / rhythm --- */
+  --radius-sm: 5px;
+  --radius-md: 9px;
+  --radius-lg: 14px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.02) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.6);
+}

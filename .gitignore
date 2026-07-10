@@ -1,27 +1,80 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+
+# =========================
 # Python
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environment
-.env
+# Virtual Environment
 .venv/
 venv/
+env/
 
-# Jupyter
-.ipynb_checkpoints/
+# Environment Variables
+.env
+.env.*
+!.env.example
 
-# VS Code
+# Python cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Node.js / Vite
+# =========================
+node_modules/
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# IDE
+# =========================
 .vscode/
+.idea/
+*.swp
 
-# Testing files
-backend/test_pipeline.py
-backend/praiser.ipynb
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
 
-# Generated files
-*.pkl
-*.index
-temp/
-sessions/
 
-backend/test_pipeline.py
+REVERSE_ENGINEERING.md
+**/REVERSE_ENGINEERING.md

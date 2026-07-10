@@ -202,15 +202,15 @@ class codeVisitor(ast.NodeVisitor):
     
 
 
-with  open("student_sample/sample_dataset.py", 'r') as f:
-    code = f.read()
+if __name__ == "__main__":
+    with open("student_sample/sample_dataset.py", 'r') as f:
+        code = f.read()
 
+    tree = ast.parse(code)
 
-tree = ast.parse(code)
+    visitor = codeVisitor(code)
+    visitor.visit(tree)
 
-visitor = codeVisitor(code)
-visitor.visit(tree)
+    json_output = json.dumps(visitor.metadata, indent=4)
 
-json_output = json.dumps(visitor.metadata, indent=4)
-
-print(json_output)
+    print(json_output)

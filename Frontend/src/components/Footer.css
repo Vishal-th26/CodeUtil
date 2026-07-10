@@ -1,0 +1,18 @@
+.app-footer {
+  border-top: 1px solid var(--border);
+  padding: 11px 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  display: flex;
+  justify-content: space-between;
+  background: var(--bg-panel);
+}
+
+.app-footer b {
+  color: var(--muted);
+  font-weight: 600;
+}
+.app-footer b.on {
+  color: var(--success);
+}
