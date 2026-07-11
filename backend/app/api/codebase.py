@@ -6,7 +6,10 @@ from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from fastapi.concurrency import run_in_threadpool
 
 from app.auth.deps import get_current_user
-from app.schemas.codebase import UploadResponse, AskRequest, AskResponse, VivaResponse
+from app.schemas.codebase import (
+    UploadResponse, AskRequest, AskResponse,
+    VivaQuestionsResponse, VivaAnswersResponse,
+)
 from app.core.codebase_registry import (
     create_session, touch_and_check_quota, get_session_readonly, delete_session,
     SessionNotFound, SessionExpired, DailyLimitExceeded, SESSION_TTL, DAILY_REQUEST_LIMIT,
@@ -77,14 +80,39 @@ async def ask(payload: AskRequest, current_user: str = Depends(get_current_user)
     return AskResponse(answer=answer)
 
 
-@router.post("/viva", response_model=VivaResponse)
-async def viva(current_user: str = Depends(get_current_user)):
+@router.post("/viva/questions", response_model=VivaQuestionsResponse)
+async def viva_questions(current_user: str = Depends(get_current_user)):
+    """Generate and return viva questions only. Caches them on the session
+    so /codebase/viva/answers can pick them up without regenerating."""
     session = _resolve_session(current_user)
     questions = await run_in_threadpool(generate_viva_questions, session.all_chunks)
+
+    # Cache on the session for the follow-up /viva/answers call.
+    # If SessionData uses __slots__/is a frozen dataclass without this field,
+    # this will raise AttributeError — add `viva_questions: dict | None = None`
+    # to that class definition.
+    session.viva_questions = questions
+
+    return VivaQuestionsResponse(questions=questions)
+
+
+@router.post("/viva/answers", response_model=VivaAnswersResponse)
+async def viva_answers(current_user: str = Depends(get_current_user)):
+    """Return answers for the most recently generated viva questions.
+    Requires /codebase/viva/questions to have been called first in this session."""
+    session = _resolve_session(current_user)
+    questions = getattr(session, "viva_questions", None)
+
+    if not questions:
+        raise HTTPException(
+            400,
+            "No viva questions found for this session. Call /codebase/viva/questions first.",
+        )
+
     answers = await run_in_threadpool(
         generate_viva_answers, questions, session.faiss_store, session.bm25_store
     )
-    return VivaResponse(questions=questions, answers=answers)
+    return VivaAnswersResponse(answers=answers)
 
 
 @router.get("/status")

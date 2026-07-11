@@ -75,8 +75,16 @@ export function createApiClient(getBaseUrl, getToken) {
       return parseResponse(res);
     },
 
-    async viva() {
-      const res = await fetch(`${getBaseUrl()}/codebase/viva`, {
+    async vivaQuestions() {
+      const res = await fetch(`${getBaseUrl()}/codebase/viva/questions`, {
+        method: "POST",
+        headers: authHeaders(),
+      });
+      return parseResponse(res);
+    },
+
+    async vivaAnswers() {
+      const res = await fetch(`${getBaseUrl()}/codebase/viva/answers`, {
         method: "POST",
         headers: authHeaders(),
       });

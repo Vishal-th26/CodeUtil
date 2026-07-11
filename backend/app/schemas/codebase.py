@@ -15,7 +15,9 @@ class AskRequest(BaseModel):
 class AskResponse(BaseModel):
     answer: str
 
-
-class VivaResponse(BaseModel):
+class VivaQuestionsResponse(BaseModel):
     questions: dict
+
+
+class VivaAnswersResponse(BaseModel):
     answers: dict
