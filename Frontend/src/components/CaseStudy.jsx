@@ -14,18 +14,18 @@ export default function CaseStudy() {
           <Reveal delay={0.05} className="case-study__col">
             <span className="case-study__label mono">Before</span>
             <ul>
-              <li>Re-reading 2,000 lines the night before, hoping something sticks</li>
-              <li>No memory of why a helper function was written months ago</li>
-              <li>Guessing at answers under pressure, hoping they sound right</li>
+              <li>Re-reading your whole project the night before, hoping something sticks</li>
+              <li>Forgetting why you wrote a piece of code months ago</li>
+              <li>Guessing answers under pressure and hoping they sound right</li>
             </ul>
           </Reveal>
 
           <Reveal delay={0.15} className="case-study__col case-study__col--after">
             <span className="case-study__label mono">After</span>
             <ul>
-              <li>Every function indexed and searchable in under a minute</li>
-              <li>A drafted set of viva questions, answered with the exact lines</li>
-              <li>Walking in already having answered the hard questions once</li>
+              <li>Your whole project explained back to you in plain English</li>
+              <li>Straight answers to the questions you're actually scared of</li>
+              <li>Walking in already knowing what you'll be asked</li>
             </ul>
           </Reveal>
         </div>
@@ -33,15 +33,15 @@ export default function CaseStudy() {
         <Reveal delay={0.2} className="case-study__metrics">
           <div>
             <span className="mono">&lt; 60s</span>
-            <p>From upload to first indexed answer</p>
+            <p>From upload to your first answer</p>
           </div>
           <div>
             <span className="mono">10</span>
-            <p>Viva questions drafted per session, graded by difficulty</p>
+            <p>Practice questions ready before your viva</p>
           </div>
           <div>
             <span className="mono">100%</span>
-            <p>Of answers traced back to a real file and line range</p>
+            <p>Every answer points back to your own code</p>
           </div>
         </Reveal>
       </div>

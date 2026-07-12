@@ -11,13 +11,13 @@ export default function Intro() {
           you understand your project as well as the person grading it.”
         </Reveal>
 
-        <Reveal delay={0.15} className="intro__attribution">
-          <div className="intro__mark mono">CU</div>
+        {/* <Reveal delay={0.15} className="intro__attribution">
+          <div className="intro__mark mono">C</div>
           <div>
             <p className="intro__name">CodeUtil</p>
             <p className="intro__role mono">For GenZ , By Genz</p>
           </div>
-        </Reveal>
+        </Reveal> */}
       </div>
     </section>
   );

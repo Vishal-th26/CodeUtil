@@ -89,3 +89,14 @@
   .nav__right .btn { display: none; }
   .nav__burger { display: flex; }
 }
+
+/* Compact variant used on auth/dashboard for consistency */
+.nav--compact {
+  background: rgba(6, 6, 6, 0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  padding: 12px 0;
+}
+.nav--compact .nav__logo { font-size: 15px; }
+.nav--compact .nav__links { gap: 18px; color: var(--text-dim); }
+.nav--compact .nav__right .btn.ghost { border-color: rgba(255,255,255,0.06); color: var(--text-dim); }
+.nav--compact .nav__right .btn { font-size: 13px; padding: 9px 14px; }

@@ -1,22 +1,22 @@
 export const stats = [
-  { value: 12, suffix: 'K+', label: 'Functions indexed in testing' },
+  { value: 12, suffix: 'K+', label: 'Functions reviewed in testing' },
   { value: 180, suffix: '%', prefix: '+', label: 'More viva questions covered per session' },
-  { value: 30, suffix: 's', label: 'Avg. time to a sourced answer' },
-  { value: 2, suffix: '', label: 'Retrieval engines, working together' },
+  { value: 30, suffix: 's', label: 'Avg. time to an answer' },
+  { value: 2, suffix: '', label: 'Two ways to find the right code' },
 ];
 
 export const capabilities = [
   {
     tag: 'ask',
     title: 'Ask your own codebase',
-    copy: 'Point CodeUtil at your project and ask it anything — "why does this loop exist," "what calls this function" — and get an answer sourced from your actual code, not a guess.',
-    tags: ['FAISS', 'BM25', 'Groq'],
+    copy: 'Point CodeUtil at your project and ask it anything — "why does this loop exist," "what calls this function" — and get a clear answer from your own work, not a guess.',
+    tags: ['Code-aware', 'Trustworthy', 'Practical'],
   },
   {
     tag: 'drill',
     title: 'Generate viva questions',
-    copy: 'CodeUtil reads every function and class you wrote and drafts questions examiners actually ask — easy, medium, and hard — then answers them itself so you can check your understanding.',
-    tags: ['AST parsing', 'LLM'],
+    copy: 'It scans your files and creates the kind of viva questions your examiners are likely to ask, so you can practice with confidence.',
+    tags: ['Fast review', 'Smart practice'],
   },
   {
     tag: 'trace',
@@ -29,27 +29,27 @@ export const capabilities = [
 export const skillset = [
   {
     n: '01',
-    title: 'Parse',
-    desc: 'Your files are walked with Python\u2019s own AST. Every function, class, argument, loop, and call gets pulled out and structured.',
-    result: 'Nothing is skimmed — every branch and condition is captured before anything is indexed.',
+    title: 'Login',
+    desc: 'Sign in so CodeUtil can keep your project and questions in one place.',
+    result: 'Start from a secure session and move straight to the next step.',
   },
   {
     n: '02',
-    title: 'Chunk & Embed',
-    desc: 'Each function becomes a self-contained chunk of source and metadata, then gets embedded into vector space alongside a keyword index.',
-    result: 'Two ways to find the same code, so a vague question and an exact-term question both land.',
+    title: 'Upload',
+    desc: 'Send in your codebase so the app can read the project you want to ask about.',
+    result: 'Your code is ready to be used for questions and practice.',
   },
   {
     n: '03',
-    title: 'Retrieve',
-    desc: 'A question triggers a hybrid search — semantic similarity from FAISS, keyword overlap from BM25 — merged and de-duplicated.',
-    result: 'The four most relevant chunks in your codebase, not the whole repo dumped into a prompt.',
+    title: 'Ask',
+    desc: 'Ask anything about your code and get an answer based on what you uploaded.',
+    result: 'CodeUtil answers from your own project, not from a generic chatbot.',
   },
   {
     n: '04',
-    title: 'Answer',
-    desc: 'Retrieved context is handed to the LLM with a strict instruction: answer only from what was given, or say it isn\u2019t there.',
-    result: 'A grounded answer with file, function, and line numbers attached.',
+    title: 'Viva',
+    desc: 'Generate viva-style questions and see the answers that help you prepare.',
+    result: 'A practical question-and-answer review built from your own code.',
   },
 ];
 
@@ -80,14 +80,108 @@ export const pricingTiers = [
     cta: 'Talk to us',
   },
 ];
-
 export const testimonials = [
-  { quote: 'I could explain my own recursion function for the first time in front of my panel, because I\u2019d already been asked about it by CodeUtil the night before.', name: 'Aarav', role: 'Final-year CS student' },
-  { quote: 'It found a helper function I\u2019d completely forgotten I wrote. My examiner asked about it two minutes later.', name: 'Meera', role: 'B.Tech, Information Technology' },
-  { quote: 'The line-level sourcing is what sold me — it never makes something up, it just tells me it\u2019s not in the code.', name: 'Devansh', role: 'Teaching assistant' },
-  { quote: 'Ran it on a group project the night before submission and it caught two functions none of us could explain.', name: 'Priya', role: 'Capstone project lead' },
+  {
+    quote: "Walked into my DBMS viva having already answered three of the exact questions my professor asked. Wasn't even nervous.",
+    name: "Ananya Rao",
+    role: "B.Tech CSE, 3rd year",
+  },
+  {
+    quote: "I forgot why I wrote a whole recursive helper six months ago. This found it and explained it back to me in ten seconds.",
+    name: "Rohit Mehta",
+    role: "MSc Computer Science",
+  },
+  {
+    quote: "Uploaded my entire capstone repo the night before submission. It flagged two functions with zero test coverage I'd completely missed.",
+    name: "Sneha Iyer",
+    role: "Final year, Information Tech",
+  },
+  {
+    quote: "My guide asked why I used a hashmap instead of a list in one function. I had the answer memorized because it was literally in my drafted Q&A.",
+    name: "Kabir Singh",
+    role: "B.E. Computer Engineering",
+  },
+  {
+    quote: "Honestly didn't expect line-level citations to actually work this well. Every answer pointed to the real file, not a guess.",
+    name: "Priya Nair",
+    role: "Backend Developer, Intern",
+  },
+  {
+    quote: "Used it to prep for a code review at my internship, not just college. Same panic, same fix.",
+    name: "Arjun Malhotra",
+    role: "SDE Intern",
+  },
+  {
+    quote: "The ten drafted viva questions were harder than what my actual panel asked. Good problem to have.",
+    name: "Divya Krishnan",
+    role: "B.Tech IT, 4th year",
+  },
+  {
+    quote: "I have ADHD and re-reading my own code the night before an exam never worked. This turned it into search instead of rereading.",
+    name: "Aditya Verma",
+    role: "MCA student",
+  },
+  {
+    quote: "Found an entire module I'd copy-pasted from a tutorial two years ago and forgotten about. My guide would've asked about it for sure.",
+    name: "Meera Pillai",
+    role: "B.Tech CSE, 3rd year",
+  },
+  {
+    quote: "The under-60-second indexing claim actually held up on a 4,000 line repo. I timed it out of disbelief.",
+    name: "Vikram Desai",
+    role: "Software Engineer, Grad hire",
+  },
+  {
+    quote: "My teammate wrote half the backend and disappeared before submissions. This is the only reason I could explain his code convincingly.",
+    name: "Ishaan Kapoor",
+    role: "B.E. Final year",
+  },
+  {
+    quote: "Every answer traced back to an actual line range, so I could just open the file and double check instead of trusting a black box.",
+    name: "Neha Choudhary",
+    role: "MSc Data Science",
+  },
+  {
+    quote: "Went from dreading 'why did you write it this way' to actually wanting someone to ask.",
+    name: "Aryan Bhatt",
+    role: "B.Tech CSE, 2nd year",
+  },
+  {
+    quote: "I used it on a legacy Django project at work, not just my thesis. Same relief, honestly bigger stakes.",
+    name: "Tanya Sharma",
+    role: "Junior Backend Developer",
+  },
+  {
+    quote: "Graded difficulty on the practice questions meant I wasn't just drilling easy ones and feeling falsely confident.",
+    name: "Karthik Subramaniam",
+    role: "M.Tech, Software Systems",
+  },
+  {
+    quote: "My viva examiner asked about edge cases in a function I hadn't touched in months. I'd already seen that exact question drafted.",
+    name: "Riya Deshmukh",
+    role: "B.Tech IT, 3rd year",
+  },
+  {
+    quote: "Compared it to just re-reading my own README the night before. Not close. This actually understood the control flow.",
+    name: "Nikhil Agarwal",
+    role: "Final year, CSE",
+  },
+  {
+    quote: "Used it the morning of my defense, not the night before, and it still only took a minute to reindex my last-minute changes.",
+    name: "Ayesha Khan",
+    role: "MSc Computer Applications",
+  },
+  {
+    quote: "The 100% traceability thing sounds like a marketing line until you're the one getting grilled and need the receipts.",
+    name: "Siddharth Rao",
+    role: "B.E. Computer Science",
+  },
+  {
+    quote: "I've recommended this to my entire study group. We all walked in with different weak spots and it covered every one of them.",
+    name: "Pooja Varma",
+    role: "B.Tech CSE, 3rd year",
+  },
 ];
-
 export const stack = ['Python', 'FastAPI', 'FAISS', 'BM25', 'Groq', 'React', 'AST', 'JWT'];
 
 export const faqs = [

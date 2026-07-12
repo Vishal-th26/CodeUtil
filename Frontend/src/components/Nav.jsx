@@ -4,11 +4,41 @@ import './nav.css';
 const LINKS = [
   { href: '#capabilities', label: 'Capabilities' },
   { href: '#how-it-works', label: 'How it works' },
-  { href: '#pricing', label: 'Reviews' },
+  { href: '#testimonials', label: 'Reviews' },
   { href: '#faq', label: 'FAQ' },
+  { href: '#contact', label: 'Contact' },
 ];
 
-export default function Nav({ onStart }) {
+function scrollToAnchor(href, onNavigate) {
+  const target = String(href || '');
+  const isHash = target.startsWith('#');
+
+  if (onNavigate) {
+    onNavigate(target);
+    return;
+  }
+
+  if (!isHash) {
+    window.location.assign(target);
+    return;
+  }
+
+  const id = target.replace('#', '');
+  if (!id) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    try { window.history.replaceState(window.history.state, '', target); } catch (e) {}
+  } else {
+    window.location.hash = target;
+  }
+}
+
+export default function Nav({ onStart, variant, onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -18,25 +48,39 @@ export default function Nav({ onStart }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  function handleLinkClick(e, href) {
+    e.preventDefault();
+    if (open) setOpen(false);
+    scrollToAnchor(href, onNavigate);
+  }
+
   return (
-    <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+    <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${variant === 'compact' ? 'nav--compact' : ''}`}>
       <div className="container nav__inner">
-        <a href="#top" className="nav__logo mono">
+        <a href="#top" className="nav__logo mono" onClick={(e) => handleLinkClick(e, '#top')}>
           <span className="nav__logo-mark">&gt;_</span>CodeUtil
         </a>
 
         <nav className="nav__links">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href}>{l.label}</a>
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={(e) => handleLinkClick(e, l.href)}
+            >
+              {l.label}
+            </a>
           ))}
         </nav>
 
         <div className="nav__right">
-          <span className="pill nav__pill">
-            <span className="dot" />
-            Early access(BETA 0.0.1)
-          </span>
-          <button type="button" className="btn btn-primary" onClick={() => onStart?.()}>Get started</button>
+          {variant !== 'compact' && (
+            <span className="pill nav__pill">
+              <span className="dot" />
+              Early access(BETA 0.0.1)
+            </span>
+          )}
+          <button type="button" className={`btn ${variant === 'compact' ? 'ghost' : 'btn-primary'}`} onClick={() => onStart?.()}>{variant === 'compact' ? 'Sign in' : 'Get started'}</button>
         </div>
 
         <button
@@ -52,7 +96,13 @@ export default function Nav({ onStart }) {
       {open && (
         <div className="nav__mobile">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={(e) => handleLinkClick(e, l.href)}
+            >
+              {l.label}
+            </a>
           ))}
           <button type="button" className="btn btn-primary" onClick={() => { setOpen(false); onStart?.(); }}>Get started</button>
         </div>

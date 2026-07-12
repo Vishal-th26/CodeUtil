@@ -79,6 +79,18 @@
   color: var(--danger);
   box-shadow: none;
 }
+.btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-dim));
+  border-color: transparent;
+  color: #08110c;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.28);
+}
+.btn-primary:hover:not(:disabled) {
+  /* matte black on hover */
+  background: #0b0b0b;
+  color: var(--accent);
+  box-shadow: none;
+}
 .btn.subtle {
   background: var(--bg-raised);
   border-color: var(--border);

@@ -1,90 +1,890 @@
-.footer {
-  border-top: 1px solid var(--hairline);
-  padding: 90px 0 40px;
+/* =====================================================
+   CODEUTIL TERMINAL FOOTER
+   PART 1 — Layout & Background
+===================================================== */
+
+.terminal-footer {
+  position: relative;
+  overflow: hidden;
+  padding: 120px 0 60px;
+
+  background:
+    radial-gradient(circle at top, var(--accent-wash) 0%, transparent 45%),
+    linear-gradient(180deg, var(--bg) 0%, #0a0a0a 50%, #000 100%);
+
+  border-top: 1px solid var(--hairline-strong);
 }
 
-.footer__top {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding-bottom: 64px;
-  border-bottom: 1px solid var(--hairline);
-  margin-bottom: 48px;
+/* ---------------- GRID ---------------- */
+
+.terminal-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(255,180,84,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,180,84,.05) 1px, transparent 1px);
+
+  background-size: 42px 42px;
+
+  mask-image: linear-gradient(to bottom,
+      transparent,
+      rgba(255,255,255,.8),
+      rgba(255,255,255,.8),
+      transparent);
+
+  animation: gridMove 20s linear infinite;
+
+  pointer-events: none;
 }
 
-.footer__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 17px;
+/* ---------------- GLOW ---------------- */
+
+.terminal-glow{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
 }
 
-.footer__logo span { color: var(--accent); }
+.terminal-glow::before{
+  content:"";
+  position:absolute;
 
-.footer__brand p {
-  margin-top: 14px;
-  color: var(--text-dim);
-  font-size: 14px;
-  max-width: 280px;
+  width:700px;
+  height:700px;
+
+  top:-260px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(circle,
+      rgba(255,180,84,.15),
+      transparent 70%);
+
+  filter:blur(60px);
+
+  animation:pulseGlow 7s ease-in-out infinite;
 }
 
-.footer__news { min-width: 300px; }
+.terminal-glow::after{
+  content:"";
 
-.footer__news > span {
-  display: block;
-  font-size: 11px;
-  color: var(--text-faint);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
+  position:absolute;
+
+  width:450px;
+  height:450px;
+
+  bottom:-220px;
+  right:-120px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(circle,
+      rgba(143,217,182,.12),
+      transparent 70%);
+
+  filter:blur(50px);
+
+  animation:pulseGlow 9s ease-in-out infinite;
 }
 
-.footer__news-row { display: flex; gap: 10px; }
+/* ---------------- SCANLINE ---------------- */
 
-.footer__news-row input {
-  flex: 1;
-  background: var(--bg-card);
-  border: 1px solid var(--hairline-strong);
-  border-radius: 999px;
-  padding: 12px 18px;
-  color: var(--text);
-  font-size: 13.5px;
+.terminal-scanline{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
 }
 
-.footer__news-row input:focus { outline: none; border-color: var(--accent); }
+.terminal-scanline::before{
 
-.footer__joined { color: var(--mint); font-size: 14px; }
+  content:"";
 
-.footer__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-bottom: 60px;
+  position:absolute;
+
+  left:0;
+  right:0;
+
+  height:140px;
+
+  background:
+  linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255,180,84,.08),
+      transparent
+  );
+
+  animation:scan 8s linear infinite;
 }
 
-.footer__grid > div { display: flex; flex-direction: column; gap: 14px; }
+/* ---------------- CRT NOISE ---------------- */
 
-.footer__grid span {
-  font-size: 11px;
-  color: var(--text-faint);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+.terminal-noise{
+
+  position:absolute;
+  inset:0;
+
+  opacity:.045;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1px);
+
+  background-size:4px 4px;
+
+  mix-blend-mode:overlay;
+
+  animation:noiseMove .45s steps(2) infinite;
+
+  pointer-events:none;
 }
 
-.footer__grid a { color: var(--text-dim); font-size: 14px; transition: color 0.3s var(--ease); }
-.footer__grid a:hover { color: var(--accent); }
+/* ---------------- CONTAINER ---------------- */
 
-.footer__bottom {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 12.5px;
-  color: var(--text-faint);
+.terminal-footer .container{
+  position:relative;
+  z-index:10;
 }
 
-@media (max-width: 640px) {
-  .footer__grid { grid-template-columns: 1fr 1fr; }
+/* ---------------- HEADER ---------------- */
+
+.terminal-header{
+
+  text-align:center;
+
+  margin-bottom:70px;
 }
+
+.terminal-title{
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:14px;
+
+  margin-bottom:20px;
+
+  flex-wrap:wrap;
+}
+
+.prompt{
+
+  color:var(--accent);
+
+  font-size:34px;
+
+  font-family:var(--font-mono);
+
+  text-shadow:0 0 18px var(--accent);
+}
+
+.terminal-title h2{
+
+  font-size:clamp(42px,6vw,84px);
+
+  font-weight:700;
+
+  letter-spacing:-.04em;
+
+  text-transform:uppercase;
+
+  color:var(--text);
+}
+
+.terminal-title span{
+
+  color:var(--accent);
+
+  text-shadow:0 0 12px var(--accent);
+}
+
+.terminal-header p{
+
+  max-width:700px;
+
+  margin:auto;
+
+  color:var(--text-dim);
+
+  line-height:1.8;
+
+  font-size:16px;
+}
+
+/* ---------------- CONSOLE ---------------- */
+
+.terminal-console{
+
+  background:var(--bg-card);
+
+  border:1px solid var(--hairline-strong);
+
+  border-radius:18px;
+
+  padding:30px;
+
+  margin-bottom:70px;
+
+  box-shadow:
+    0 0 0 1px var(--hairline),
+    0 40px 100px rgba(0,0,0,.55);
+}
+
+.console-line{
+
+  font-family:var(--font-mono);
+
+  color:var(--accent);
+
+  font-size:15px;
+
+  padding:8px 0;
+
+  letter-spacing:.03em;
+
+  border-bottom:1px dashed var(--hairline);
+}
+
+.console-line:last-child{
+  border:none;
+}
+
+/* ---------------- KEYFRAMES ---------------- */
+
+@keyframes pulseGlow{
+
+  0%,100%{
+    transform:translateX(-50%) scale(1);
+    opacity:.6;
+  }
+
+  50%{
+    transform:translateX(-50%) scale(1.08);
+    opacity:1;
+  }
+
+}
+
+@keyframes gridMove{
+
+  from{
+    background-position:0 0;
+  }
+
+  to{
+    background-position:0 42px;
+  }
+
+}
+
+@keyframes scan{
+
+  from{
+    transform:translateY(-200px);
+  }
+
+  to{
+    transform:translateY(120vh);
+  }
+
+}
+
+@keyframes noiseMove{
+
+  from{
+    transform:translate(0,0);
+  }
+
+  to{
+    transform:translate(2px,-2px);
+  }
+
+}
+
+/* =====================================================
+   CODEUTIL TERMINAL FOOTER
+   PART 2 — Terminal Blocks / Links / Cursor / Bottom
+===================================================== */
+
+/* ---------------- TERMINAL SECTIONS ---------------- */
+
+.terminal-sections{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:32px;
+  margin-bottom:80px;
+}
+
+.terminal-block{
+  position:relative;
+
+  background:rgba(21,21,21,.6);
+
+  border:1px solid var(--hairline-strong);
+
+  border-radius:18px;
+
+  padding:28px;
+
+  overflow:hidden;
+
+  transition:
+    transform .45s cubic-bezier(.22,1,.36,1),
+    border-color .45s,
+    box-shadow .45s;
+}
+
+.terminal-block::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+      135deg,
+      rgba(255,180,84,.06),
+      transparent 40%,
+      transparent
+  );
+
+  opacity:0;
+
+  transition:.45s;
+}
+
+.terminal-block::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  top:0;
+
+  width:2px;
+  height:100%;
+
+  background:var(--accent);
+
+  transform:scaleY(0);
+
+  transform-origin:top;
+
+  transition:.45s;
+}
+
+.terminal-block:hover{
+
+  transform:translateY(-10px);
+
+  border-color:rgba(255,180,84,.35);
+
+  box-shadow:
+      0 25px 60px rgba(0,0,0,.5),
+      0 0 35px rgba(255,180,84,.15);
+}
+
+.terminal-block:hover::before{
+  opacity:1;
+}
+
+.terminal-block:hover::after{
+  transform:scaleY(1);
+}
+
+/* ---------------- TITLES ---------------- */
+
+.block-title{
+
+  color:var(--accent);
+
+  font-size:15px;
+
+  font-family:var(--font-mono);
+
+  margin-bottom:24px;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+  text-shadow:0 0 12px rgba(255,180,84,.3);
+}
+
+/* ---------------- LINKS ---------------- */
+
+.terminal-block a{
+
+  position:relative;
+
+  display:block;
+
+  width:fit-content;
+
+  color:var(--text-dim);
+
+  text-decoration:none;
+
+  margin:14px 0;
+
+  padding-left:0;
+
+  transition:
+      color .3s,
+      padding-left .3s,
+      text-shadow .3s,
+      transform .3s,
+      all .3s ease;
+}
+
+.terminal-block a::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:-18px;
+  top:50%;
+
+  width:8px;
+  height:2px;
+
+  background:var(--accent);
+
+  transform:translateY(-50%) scaleX(0);
+
+  transform-origin:left;
+
+  transition:.3s;
+}
+
+.terminal-block a:hover{
+
+  color:var(--accent);
+
+  padding-left:12px;
+
+  text-shadow:0 0 10px rgba(255,180,84,.4);
+}
+
+.terminal-block a:hover::before{
+
+  transform:translateY(-50%) scaleX(1);
+}
+
+/* ---------------- CURSOR ---------------- */
+
+.cursor{
+
+  width:12px;
+
+  height:28px;
+
+  background:var(--accent);
+
+  display:inline-block;
+
+  border-radius:2px;
+
+  box-shadow:
+      0 0 10px var(--accent),
+      0 0 25px rgba(255,180,84,.4);
+
+  animation:blink 1s steps(2) infinite;
+}
+
+.cursor.small{
+
+  width:8px;
+  height:16px;
+
+  margin-left:8px;
+}
+
+/* ---------------- BOTTOM ---------------- */
+
+.terminal-bottom{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:24px;
+
+  padding-top:32px;
+
+  border-top:1px solid var(--hairline);
+
+  color:var(--text-faint);
+
+  font-size:13px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.08em;
+}
+
+.terminal-bottom div{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+}
+
+.green{
+
+  color:var(--accent);
+
+  text-shadow:0 0 10px rgba(255,180,84,.3);
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width:1000px){
+
+  .terminal-sections{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media (max-width:768px){
+
+  .terminal-footer{
+    padding:90px 0 50px;
+  }
+
+  .terminal-console{
+    padding:22px;
+  }
+
+  .terminal-title{
+    gap:10px;
+  }
+
+  .terminal-title h2{
+    font-size:44px;
+  }
+
+  .terminal-bottom{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:18px;
+  }
+
+}
+
+@media (max-width:520px){
+
+  .terminal-title h2{
+    font-size:34px;
+  }
+
+  .console-line{
+    font-size:13px;
+  }
+
+  .terminal-block{
+    padding:22px;
+  }
+
+}
+
+/* ---------------- EXTRA ANIMATIONS ---------------- */
+
+@keyframes blink{
+
+  0%,45%{
+    opacity:1;
+  }
+
+  50%,100%{
+    opacity:0;
+  }
+
+}
+
+/* =====================================================
+   PART 3A — Cyber Terminal Polish
+===================================================== */
+
+/* ---------- CRT Flicker ---------- */
+
+.terminal-footer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.035;
+  background:#fff;
+  mix-blend-mode:overlay;
+  animation:crtFlicker .18s steps(2) infinite;
+}
+
+/* ---------- Horizontal Scanlines ---------- */
+
+.terminal-footer{
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,255,170,.025) 4px
+    );
+}
+
+/* ---------- Animated Border Glow ---------- */
+
+.terminal-block{
+
+  isolation:isolate;
+
+}
+
+.terminal-block::before{
+
+  animation:borderSweep 6s linear infinite;
+
+}
+
+/* ---------- Console Lines ---------- */
+
+.console-line{
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+.console-line::after{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-120%;
+
+  width:80%;
+  height:100%;
+
+  background:
+  linear-gradient(
+      90deg,
+      transparent,
+      rgba(0,255,170,.18),
+      transparent
+  );
+
+  animation:lineSweep 4s linear infinite;
+}
+
+/* ---------- Neon Logo ---------- */
+
+.terminal-title h2{
+
+  text-shadow:
+      0 0 10px rgba(0,255,170,.12),
+      0 0 25px rgba(0,255,170,.12);
+
+}
+
+/* ---------- Hover Glow ---------- */
+
+.terminal-block:hover{
+
+  box-shadow:
+      0 0 0 1px rgba(0,255,170,.15),
+      0 18px 60px rgba(0,0,0,.55),
+      0 0 40px rgba(0,255,170,.12),
+      inset 0 0 40px rgba(0,255,170,.03);
+
+}
+
+/* ---------- Links ---------- */
+
+.terminal-block a{
+
+  overflow:hidden;
+
+}
+
+.terminal-block a::after{
+
+  content:"_";
+
+  margin-left:8px;
+
+  opacity:0;
+
+  color:#00ff88;
+
+  transition:.3s;
+
+}
+
+.terminal-block a:hover::after{
+
+  opacity:1;
+
+  animation:blink .8s infinite;
+
+}
+
+/* ---------- Prompt ---------- */
+
+.prompt{
+
+  animation:terminalPulse 2s ease-in-out infinite;
+
+}
+
+/* ---------- Console ---------- */
+
+.terminal-console{
+
+  backdrop-filter:blur(12px);
+
+  position:relative;
+
+}
+
+.terminal-console::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:1px;
+
+  background:
+  linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,180,84,.4),
+      transparent
+  );
+
+}
+
+/* ---------- Bottom ---------- */
+
+.terminal-bottom{
+
+  opacity:.85;
+
+  transition:.4s;
+
+}
+
+.terminal-bottom:hover{
+
+  opacity:1;
+
+}
+
+/* ---------- Scroll Reveal ---------- */
+
+.terminal-header,
+.terminal-console,
+.terminal-block,
+.terminal-bottom{
+
+  will-change:transform,opacity;
+
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes crtFlicker{
+
+  0%{opacity:.03;}
+  20%{opacity:.05;}
+  40%{opacity:.025;}
+  60%{opacity:.06;}
+  80%{opacity:.03;}
+  100%{opacity:.05;}
+
+}
+
+@keyframes terminalPulse{
+
+  0%,100%{
+
+      text-shadow:
+      0 0 8px var(--accent);
+
+  }
+
+  50%{
+
+      text-shadow:
+      0 0 18px var(--accent),
+      0 0 35px rgba(255,180,84,.3);
+
+  }
+
+}
+
+@keyframes borderSweep{
+
+  0%{
+
+      opacity:.2;
+
+  }
+
+  50%{
+
+      opacity:.9;
+
+  }
+
+  100%{
+
+      opacity:.2;
+
+  }
+
+}
+
+@keyframes lineSweep{
+
+  from{
+
+      left:-100%;
+
+  }
+
+  to{
+
+      left:120%;
+
+  }
+
+}
+

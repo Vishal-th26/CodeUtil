@@ -1,54 +1,39 @@
-import "./Sidebar.css";
+import React from 'react';
+import './sidebar.css';
 
-const ACCOUNT_ITEMS = [
-  { view: "signup", ext: ".new", label: "sign up" },
-  { view: "login", ext: ".auth", label: "log in" },
-];
-
-const CODEBASE_ITEMS = [
-  { view: "upload", ext: ".idx", label: "upload" },
-  { view: "ask", ext: ".qry", label: "ask" },
-  { view: "viva", ext: ".viva", label: "viva" },
-  { view: "status", ext: ".sys", label: "status" },
-];
-
-export default function Sidebar({ view, setView, isAuthed }) {
-  return (
-    <nav className="sidebar" aria-label="Sections">
-      <div className="nav-group">
-        <div className="group-label">account</div>
-        {ACCOUNT_ITEMS.map((item) => (
-          <NavItem key={item.view} item={item} active={view === item.view} onClick={() => setView(item.view)} />
-        ))}
-      </div>
-      <div className="nav-group">
-        <div className="group-label">codebase</div>
-        {CODEBASE_ITEMS.map((item) => (
-          <NavItem
-            key={item.view}
-            item={item}
-            active={view === item.view}
-            locked={!isAuthed}
-            onClick={() => isAuthed && setView(item.view)}
-          />
-        ))}
-      </div>
-    </nav>
-  );
+function scrollToPanel(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  try { window.history.replaceState(window.history.state, '', `#${id}`); } catch (e) {}
 }
 
-function NavItem({ item, active, locked, onClick }) {
+export default function Sidebar({ onLogout, onAuthNav, email, hasIndexed }) {
+  function handlePanelClick(e, id) {
+    e.preventDefault();
+    if (!hasIndexed && id !== 'panel-upload') return;
+    scrollToPanel(id);
+  }
+
   return (
-    <button
-      type="button"
-      className={"navitem" + (active ? " active" : "") + (locked ? " locked" : "")}
-      onClick={onClick}
-      disabled={locked}
-      aria-current={active ? "page" : undefined}
-      title={locked ? "Log in to unlock" : undefined}
-    >
-      <span className="ext mono">{item.ext}</span>
-      <span>{item.label}</span>
-    </button>
+    <aside className="dashboard-sidebar">
+      <div className="sidebar-top">
+        <div className="logo mono">&gt;_ CodeUtil</div>
+        <div className="email mono" title={email}>{email}</div>
+      </div>
+
+      <nav className="sidebar-nav">
+        <a className="active">Dashboard</a>
+        <a href="#panel-upload" onClick={(e) => handlePanelClick(e, 'panel-upload')}>Upload</a>
+        <a href="#panel-ask" className={!hasIndexed ? 'locked' : ''} onClick={(e) => handlePanelClick(e, 'panel-ask')}>Ask</a>
+        <a href="#panel-viva" className={!hasIndexed ? 'locked' : ''} onClick={(e) => handlePanelClick(e, 'panel-viva')}>Viva</a>
+        <a href="#panel-status" className={!hasIndexed ? 'locked' : ''} onClick={(e) => handlePanelClick(e, 'panel-status')}>Session</a>
+      </nav>
+
+      <div className="sidebar-bottom">
+        <button className="btn subtle" onClick={() => onAuthNav?.('auth')}>Back to auth</button>
+        <button className="btn" onClick={() => onLogout?.()}>Logout</button>
+      </div>
+    </aside>
   );
 }

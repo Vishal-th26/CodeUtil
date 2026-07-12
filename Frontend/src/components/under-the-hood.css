@@ -1,43 +1,262 @@
-.hood__cluster {
+.hood {
+  margin-top: 92px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* faint dot-grid "PCB" texture behind everything */
+.hood__bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 0%, transparent 75%);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hood .container { position: relative; z-index: 1; }
+
+/* ================= CIRCUIT DIAGRAM ================= */
+.hood__circuit {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-direction: column;
   margin-bottom: 72px;
 }
 
-.hood__badge {
-  padding: 12px 20px;
-  border-radius: 999px;
-  border: 1px solid var(--hairline-strong);
-  font-size: 13px;
-  color: var(--text-dim);
-  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+.hood__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 0 12px;
 }
 
-.hood__badge:hover { color: var(--accent); border-color: var(--accent-dim); }
+.hood__row--top { margin-bottom: -1px; }
+.hood__row--bottom { margin-top: -1px; }
 
-.hood__counters {
+.hood__node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hood__node--up { flex-direction: column; }
+.hood__node--down { flex-direction: column-reverse; }
+
+.hood__stem {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(180deg, var(--hairline-strong, var(--hairline)), var(--hairline));
+  transform-origin: top center;
+}
+
+.hood__node--down .hood__stem { transform-origin: bottom center; }
+
+.hood__badge {
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--hairline-strong, var(--hairline));
+  background: var(--bg-card);
+  font-size: 12.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease),
+              box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.hood__badge:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 16px -4px var(--accent-dim);
+  transform: translateY(-2px);
+}
+
+/* the horizontal "bus" line with a permanently traveling signal pulse */
+.hood__bus {
+  position: relative;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hood__bus-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--hairline-strong, var(--hairline));
+}
+
+.hood__bus-pulse {
+  position: absolute;
+  top: 50%;
+  width: 90px;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--mint), transparent);
+  filter: drop-shadow(0 0 6px var(--mint));
+}
+
+.hood__core {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 116px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--bg-raised);
+  border: 1px solid var(--accent-dim);
+  box-shadow: 0 0 0 6px var(--accent-wash), 0 0 30px -8px var(--accent-dim);
+}
+
+.hood__core-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-dim);
+  animation: coreRing 2.6s ease-in-out infinite;
+}
+
+@keyframes coreRing {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+
+.hood__core-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* ================= READOUT PANEL ================= */
+.hood__readout {
+  position: relative;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.hood__readout-chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hood__chrome-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hairline-strong, var(--hairline));
+}
+
+.hood__chrome-label {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.hood__chrome-live {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--mint);
+}
+
+.hood__chrome-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 6px var(--mint);
+  animation: liveBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes liveBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* subtle scanline sweeping down the panel, like a CRT readout */
+.hood__readout-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 40%;
+  background: linear-gradient(180deg, var(--accent-wash), transparent);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: scanSweep 5s ease-in-out infinite;
+}
+
+@keyframes scanSweep {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  15%  { opacity: 0.35; }
+  50%  { transform: translateY(220%); opacity: 0.35; }
+  65%  { opacity: 0; }
+  100% { transform: translateY(220%); opacity: 0; }
+}
+
+.hood__stats {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  border-top: 1px solid var(--hairline);
-  padding-top: 48px;
 }
 
-.hood__counter { text-align: left; }
+.hood__stat {
+  padding: 40px 32px;
+  text-align: left;
+}
 
-.hood__counter span {
-  font-size: 42px;
+.hood__stat--divided {
+  border-right: 1px solid var(--hairline);
+}
+
+.hood__stat-value {
+  font-size: 44px;
+  font-weight: 700;
   color: var(--accent);
-  font-weight: 600;
+  text-shadow: 0 0 24px var(--accent-dim);
+  letter-spacing: -0.02em;
 }
 
-.hood__counter p {
-  margin-top: 8px;
+.hood__stat-label {
+  margin-top: 10px;
   color: var(--text-dim);
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
+/* ================= MOBILE ================= */
 @media (max-width: 720px) {
-  .hood__counters { grid-template-columns: 1fr; gap: 32px; }
+  .hood__row { gap: 20px; }
+  .hood__node { transform: none !important; }
+  .hood__stem { display: none; }
+  .hood__bus { height: 50px; }
+  .hood__core { width: 96px; height: 38px; }
+  .hood__core-label { font-size: 10px; }
+
+  .hood__stats {
+    grid-template-columns: 1fr;
+  }
+  .hood__stat--divided {
+    border-right: none;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hood__stat { padding: 28px 24px; }
 }

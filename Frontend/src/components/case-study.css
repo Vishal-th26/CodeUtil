@@ -1,7 +1,90 @@
 .case-study {
+  position: relative;
+  overflow: hidden;
   background: var(--bg-raised);
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+/* ambient corner glows, like the reference banner */
+.case-study::before,
+.case-study::after {
+  content: '';
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.case-study::before {
+  left: -160px;
+  bottom: -160px;
+  background: radial-gradient(circle, #ff8a3d 0%, transparent 70%);
+}
+
+.case-study::after {
+  right: -160px;
+  top: -160px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+}
+
+/* dotted texture, faint, top-right */
+.case-study__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.case-study__inner::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -60px;
+  width: 260px;
+  height: 260px;
+  background-image: radial-gradient(var(--hairline-strong) 1px, transparent 1px);
+  background-size: 14px 14px;
+  mask-image: radial-gradient(circle, black 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle, black 0%, transparent 75%);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* centered icon badge, echoes the shield icon in the reference */
+.case-study__badge {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.case-study__badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid var(--hairline-strong);
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-raised) 100%);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--hairline) inset, 0 0 24px -6px var(--accent-dim);
+  animation: badgeGlow 3.2s ease-in-out infinite;
+}
+
+.case-study__badge-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 0 1px var(--hairline) inset, 0 0 18px -8px var(--accent-dim); }
+  50%      { box-shadow: 0 0 0 1px var(--hairline) inset, 0 0 30px -4px var(--accent-dim); }
 }
 
 .case-study__grid {
@@ -12,15 +95,28 @@
 }
 
 .case-study__col {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
   padding: 32px;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.case-study__col:hover {
+  transform: translateY(-4px);
+  border-color: var(--hairline-strong);
+  box-shadow: 0 16px 40px -20px rgba(0, 0, 0, 0.5);
 }
 
 .case-study__col--after {
   border-color: var(--accent-dim);
   background: linear-gradient(180deg, var(--accent-wash) 0%, var(--bg-card) 26%);
+}
+
+.case-study__col--after:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 40px -18px var(--accent-dim);
 }
 
 .case-study__label {
@@ -34,7 +130,11 @@
 
 .case-study__col--after .case-study__label { color: var(--accent); }
 
-.case-study__col ul { display: flex; flex-direction: column; gap: 16px; }
+.case-study__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
 .case-study__col li {
   color: var(--text-dim);
@@ -42,6 +142,17 @@
   line-height: 1.6;
   padding-left: 18px;
   position: relative;
+  opacity: 0;
+  animation: liFadeIn 0.5s ease forwards;
+}
+
+.case-study__col li:nth-child(1) { animation-delay: 0.15s; }
+.case-study__col li:nth-child(2) { animation-delay: 0.3s; }
+.case-study__col li:nth-child(3) { animation-delay: 0.45s; }
+
+@keyframes liFadeIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .case-study__col li::before {
@@ -55,7 +166,10 @@
   background: var(--hairline-strong);
 }
 
-.case-study__col--after li::before { background: var(--accent); }
+.case-study__col--after li::before {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-dim);
+}
 
 .case-study__metrics {
   display: grid;
@@ -64,10 +178,29 @@
   text-align: center;
 }
 
+.case-study__metrics > div {
+  padding: 20px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.case-study__metrics > div:hover {
+  border-color: var(--hairline);
+  background: var(--bg-card);
+  transform: translateY(-2px);
+}
+
 .case-study__metrics span {
   font-size: 30px;
   color: var(--accent);
   font-weight: 600;
+  display: inline-block;
+  transition: text-shadow 0.3s ease;
+}
+
+.case-study__metrics > div:hover span {
+  text-shadow: 0 0 18px var(--accent-dim);
 }
 
 .case-study__metrics p {
@@ -77,5 +210,8 @@
 }
 
 @media (max-width: 860px) {
-  .case-study__grid, .case-study__metrics { grid-template-columns: 1fr; }
+  .case-study__grid,
+  .case-study__metrics {
+    grid-template-columns: 1fr;
+  }
 }

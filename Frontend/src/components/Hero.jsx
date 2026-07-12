@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import IndexGrid from './IndexGrid';
 import './hero.css';
 
-export default function Hero() {
+export default function Hero({ onStart, onNavigate }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -60]);
@@ -41,8 +41,10 @@ export default function Hero() {
         </p>
 
         <div className="hero__ctas">
-          <a href="#contact" className="btn btn-primary">Upload your project</a>
-          <a href="#how-it-works" className="btn btn-ghost">See how it works</a>
+          {/* onStart() -> goes to auth */}
+          <a className="btn btn-primary" onClick={(e) => { e.preventDefault(); onStart?.(); }}>Upload your project</a>
+          {/* onNavigate('#how-it-works') -> scrolls to case study */}
+          <a className="btn btn-ghost" onClick={(e) => { e.preventDefault(); onNavigate?.('#how-it-works'); }}>See how it works</a>
         </div>
 
         <div className="hero__meta mono">

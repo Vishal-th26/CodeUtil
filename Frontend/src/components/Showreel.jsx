@@ -6,7 +6,7 @@ export default function Showreel() {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <section className="section showreel">
+    <section id="how-it-works" className="section showreel">
       <div className="container">
         <Reveal className="section-head showreel__head">
           <span className="eyebrow">Walkthrough</span>
