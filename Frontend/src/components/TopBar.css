@@ -1,73 +1,65 @@
 .topbar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-panel);
-}
-
-.logo-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--amber);
-  box-shadow: 0 0 8px var(--amber-glow);
+  gap: 14px;
+  padding: 18px 32px 0;
+  color: var(--text);
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: -0.01em;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.logo-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--mint));
+  box-shadow: 0 0 0 4px rgba(255, 180, 84, 0.15);
 }
 
 .topbar-user {
-  margin-left: 18px;
-  font-size: 11.5px;
-  color: var(--muted);
-  padding: 4px 9px;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  max-width: 220px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin-left: auto;
+  color: var(--text-dim);
+  font-size: 13px;
 }
 
 .topbar-endpoint {
-  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.topbar-endpoint label {
-  font-size: 11px;
-  color: var(--faint);
-  white-space: nowrap;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .topbar-endpoint input {
-  width: 200px;
-  padding: 6px 9px;
-  font-size: 11.5px;
-  font-family: var(--font-mono);
-  background: var(--bg-inset);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text-dim);
+  border: none;
   outline: none;
-}
-.topbar-endpoint input:focus {
-  border-color: var(--amber);
+  background: transparent;
+  color: var(--text);
+  min-width: 220px;
 }
 
-@media (max-width: 640px) {
-  .topbar-endpoint input {
-    width: 130px;
+@media (max-width: 720px) {
+  .topbar {
+    flex-wrap: wrap;
+    padding: 16px 20px 0;
   }
-  .topbar-user {
-    display: none;
+
+  .topbar-endpoint {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .topbar-endpoint input {
+    min-width: 0;
+    flex: 1;
   }
 }

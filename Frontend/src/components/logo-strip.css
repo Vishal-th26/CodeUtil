@@ -1,0 +1,21 @@
+.logo-strip {
+  overflow: hidden;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  padding: 34px 0;
+}
+
+.logo-strip__track {
+  animation-duration: 26s;
+  gap: 64px;
+}
+
+.logo-strip__item {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  white-space: nowrap;
+  transition: color 0.3s var(--ease);
+}
+
+.logo-strip__item:hover { color: var(--accent); }

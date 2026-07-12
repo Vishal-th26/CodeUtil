@@ -109,7 +109,7 @@ export default function UploadView() {
                     removeFile(f.name);
                   }}
                 >
-                  ×
+                  +
                 </button>
               </span>
             </li>
@@ -119,7 +119,7 @@ export default function UploadView() {
 
       <div className="row">
         <button className="btn" onClick={handleUpload} disabled={indexing}>
-          {indexing ? "indexing…" : "upload & index"}
+          {indexing ? "indexingG" : "upload & index"}
         </button>
       </div>
 
@@ -127,7 +127,7 @@ export default function UploadView() {
         <IndexVisualizer
           active={indexing}
           filledRatio={justIndexed ? 1 : 0}
-          label={indexing ? "parsing · chunking · embedding" : justIndexed ? "index updated" : "idle"}
+          label={indexing ? "parsing -+ chunking -+ embedding" : justIndexed ? "index updated" : "idle"}
         />
       </div>
 

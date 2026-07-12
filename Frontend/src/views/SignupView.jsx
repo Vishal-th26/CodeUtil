@@ -57,7 +57,7 @@ export default function SignupView({ onDone }) {
           <input
             id="su-pass"
             type="password"
-            placeholder="••••••••"
+            placeholder="GGGGGGGG"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="new-password"
@@ -65,7 +65,7 @@ export default function SignupView({ onDone }) {
         </div>
         <div className="row">
           <button type="submit" className="btn" disabled={loading}>
-            {loading ? "registering…" : "register"}
+            {loading ? "registeringG" : "register"}
           </button>
           {onDone && (
             <button type="button" className="btn subtle" onClick={onDone}>

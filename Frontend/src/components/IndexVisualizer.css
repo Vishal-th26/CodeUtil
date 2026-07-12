@@ -1,41 +1,37 @@
 .index-viz {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 10px;
 }
 
 .index-viz-grid {
   display: grid;
-  gap: 4px;
+  gap: 6px;
+  width: 100%;
+  max-width: 340px;
 }
 
 .index-cell {
   aspect-ratio: 1;
-  background: var(--bg-inset);
-  border: 1px solid var(--border-soft);
-  border-radius: 2px;
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
 .index-cell.lit {
-  background: var(--amber);
-  border-color: var(--amber);
-  box-shadow: 0 0 7px var(--amber-glow);
+  background: linear-gradient(135deg, var(--accent), var(--mint));
+  border-color: transparent;
+  transform: translateY(-1px);
 }
 
-.index-viz.dense .index-cell {
-  border-radius: 1px;
+.index-viz.dense .index-viz-grid {
+  max-width: 220px;
 }
 
 .index-viz-label {
-  font-size: 10.5px;
-  color: var(--faint);
-  letter-spacing: 0.04em;
-  text-align: right;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .index-cell {
-    transition: none;
-  }
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }

@@ -51,7 +51,7 @@ export default function AskView() {
         </div>
         <div className="row">
           <button type="submit" className="btn" disabled={loading}>
-            {loading ? "thinking…" : "ask"}
+            {loading ? "thinkingG" : "ask"}
           </button>
           {EXAMPLES.map((ex) => (
             <button type="button" key={ex} className="btn subtle" onClick={() => setQuery(ex)}>
@@ -61,7 +61,7 @@ export default function AskView() {
         </div>
       </form>
 
-      {loading && <div className="out pending">retrieving from FAISS + BM25, then querying the model…</div>}
+      {loading && <div className="out pending">retrieving from FAISS + BM25, then querying the modelG</div>}
       {error && <div className="out err">{error}</div>}
       {answer && <div className="out ok">{answer}</div>}
     </Panel>

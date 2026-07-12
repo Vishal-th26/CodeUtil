@@ -1,0 +1,119 @@
+.pricing__head { text-align: center; margin-left: auto; margin-right: auto; }
+
+.pricing__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 56px;
+  font-size: 14px;
+  color: var(--text-faint);
+}
+
+.pricing__toggle .active { color: var(--text); }
+.pricing__toggle em { font-style: normal; color: var(--mint); font-size: 11px; }
+
+.toggle {
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--hairline-strong);
+  border: none;
+  position: relative;
+  transition: background 0.35s var(--ease);
+}
+
+.toggle__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: transform 0.35s var(--ease);
+}
+
+.toggle--on { background: var(--accent); }
+.toggle--on .toggle__knob { transform: translateX(20px); background: #14100a; }
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pricing__card {
+  padding: 36px 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.pricing__card--featured {
+  border-color: var(--accent-dim);
+  background: linear-gradient(180deg, var(--accent-wash) 0%, var(--bg-card) 30%);
+}
+
+.pricing__badge {
+  position: absolute;
+  top: -12px;
+  right: 30px;
+  background: var(--accent);
+  color: #14100a;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.pricing__card h3 {
+  font-size: 20px;
+  text-transform: none;
+}
+
+.pricing__tagline {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 13.5px;
+}
+
+.pricing__price {
+  margin: 26px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.pricing__price span:first-child { font-size: 38px; color: var(--text); }
+.pricing__period { color: var(--text-faint); font-size: 13px; }
+
+.pricing__features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex: 1;
+}
+
+.pricing__features li {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  padding-left: 20px;
+  position: relative;
+}
+
+.pricing__features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.pricing__cta { justify-content: center; width: 100%; }
+
+@media (max-width: 900px) {
+  .pricing__grid { grid-template-columns: 1fr; }
+}

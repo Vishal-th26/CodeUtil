@@ -54,7 +54,7 @@ export default function LoginView({ onSuccess }) {
           <input
             id="li-pass"
             type="password"
-            placeholder="••••••••"
+            placeholder="GGGGGGGG"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
@@ -62,11 +62,11 @@ export default function LoginView({ onSuccess }) {
         </div>
         <div className="row">
           <button type="submit" className="btn" disabled={loading}>
-            {loading ? "logging in…" : "log in"}
+            {loading ? "logging inG" : "log in"}
           </button>
           <span className={"badge " + (isAuthed ? "on" : "off")}>
             <span className="b-dot" />
-            {isAuthed ? `authenticated · ${authedEmail}` : "not authenticated"}
+            {isAuthed ? `authenticated -+ ${authedEmail}` : "not authenticated"}
           </span>
         </div>
       </form>

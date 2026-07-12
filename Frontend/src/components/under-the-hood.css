@@ -1,0 +1,43 @@
+.hood__cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 72px;
+}
+
+.hood__badge {
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-strong);
+  font-size: 13px;
+  color: var(--text-dim);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.hood__badge:hover { color: var(--accent); border-color: var(--accent-dim); }
+
+.hood__counters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  border-top: 1px solid var(--hairline);
+  padding-top: 48px;
+}
+
+.hood__counter { text-align: left; }
+
+.hood__counter span {
+  font-size: 42px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.hood__counter p {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .hood__counters { grid-template-columns: 1fr; gap: 32px; }
+}

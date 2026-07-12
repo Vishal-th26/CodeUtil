@@ -7,7 +7,6 @@ import "./VivaView.css";
 const DIFFICULTIES = ["easy", "medium", "hard"];
 
 function normalizeQuestionList(list) {
-  // Each item may be a plain string or an object with a question/q field.
   return (list || []).map((item) =>
     typeof item === "string" ? { question: item } : { question: item.question || item.q }
   );
@@ -20,8 +19,8 @@ export default function VivaView() {
   const [loadingAnswers, setLoadingAnswers] = useState(false);
   const [questionsError, setQuestionsError] = useState(null);
   const [answersError, setAnswersError] = useState(null);
-  const [questions, setQuestions] = useState(null); // raw { easy: [...], medium: [...], hard: [...] }
-  const [answers, setAnswers] = useState(null); // raw { easy: [...], medium: [...], hard: [...] }
+  const [questions, setQuestions] = useState(null);
+  const [answers, setAnswers] = useState(null);
 
   async function handleGenerateQuestions() {
     setLoadingQuestions(true);
@@ -62,8 +61,7 @@ export default function VivaView() {
         generate a viva<span className="blink-cursor" />
       </h1>
       <p className="subtitle">
-        10 questions across easy, medium, and hard. Generate the questions first, then
-        fetch answers backed by evidence pulled from your files.
+        10 questions across easy, medium, and hard. Generate the questions first, then fetch answers backed by evidence pulled from your files.
       </p>
 
       <div className="row">

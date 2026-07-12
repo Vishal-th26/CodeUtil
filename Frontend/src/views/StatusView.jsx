@@ -49,7 +49,7 @@ export default function StatusView({ onSessionChange }) {
 
       <div className="row">
         <button className="btn" onClick={refresh} disabled={loading}>
-          {loading ? "checking…" : "refresh"}
+          {loading ? "checkingG" : "refresh"}
         </button>
         <button className="btn ghost" onClick={handleEndSession}>
           end session
@@ -58,8 +58,8 @@ export default function StatusView({ onSessionChange }) {
 
       <div className="status-layout">
         <div className="statline">
-          {!data && !error && <span className="statline-empty">no session data yet — click refresh</span>}
-          {data && !active && <span className="statline-empty">no active session — upload a codebase to start one</span>}
+          {!data && !error && <span className="statline-empty">no session data yet G click refresh</span>}
+          {data && !active && <span className="statline-empty">no active session G upload a codebase to start one</span>}
           {data && active && (
             <>
               <span>

@@ -1,46 +1,42 @@
 :root {
-  /* --- surface --- */
-  --bg-void: #0b0d12;
-  --bg-panel: #12151c;
-  --bg-raised: #1a1e27;
-  --bg-inset: #0e1015;
-  --border: #242a36;
-  --border-soft: #1c212b;
+  /* ---- Color: near-black graphite scale, one warm accent ---- */
+  --bg: #0a0a0a;
+  --bg-raised: #121212;
+  --bg-card: #151515;
+  --bg-card-hover: #1a1a1a;
+  --hairline: rgba(237, 234, 227, 0.09);
+  --hairline-strong: rgba(237, 234, 227, 0.16);
 
-  /* --- accent: amber, the "indexed / live" signal --- */
-  --amber: #e8a33d;
-  --amber-dim: #8a6425;
-  --amber-soft: rgba(232, 163, 61, 0.1);
-  --amber-glow: rgba(232, 163, 61, 0.35);
+  --text: #edeae3;
+  --text-dim: rgba(237, 234, 227, 0.62);
+  --text-faint: rgba(237, 234, 227, 0.38);
 
-  /* --- text --- */
-  --text: #e7e9ee;
-  --text-dim: #b7bccb;
-  --muted: #868fa3;
-  --faint: #4d5566;
+  --accent: #ffb454;       /* amber — CodeUtil's signature */
+  --accent-dim: #b9803c;
+  --accent-wash: rgba(255, 180, 84, 0.1);
+  --accent-wash-strong: rgba(255, 180, 84, 0.18);
 
-  /* --- state --- */
-  --success: #4fd1a5;
-  --success-soft: rgba(79, 209, 165, 0.1);
-  --danger: #e8615a;
-  --danger-soft: rgba(232, 97, 90, 0.1);
+  --mint: #8fd9b6;          /* success / correct answer */
+  --crimson: #c1706a;       /* error / gap in knowledge */
 
-  /* --- type --- */
-  --font-display: "Space Grotesk", "IBM Plex Sans", sans-serif;
-  --font-sans: "IBM Plex Sans", -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* ---- Type ---- */
+  --font-display: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  /* --- shape / rhythm --- */
-  --radius-sm: 5px;
-  --radius-md: 9px;
-  --radius-lg: 14px;
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
+  /* ---- Layout ---- */
+  --section-pad: 160px;
+  --section-pad-mobile: 88px;
+  --container-w: 1240px;
+  --radius-lg: 24px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
 
-  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.02) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.6);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 860px) {
+  :root {
+    --section-pad: var(--section-pad-mobile);
+  }
 }
