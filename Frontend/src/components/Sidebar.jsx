@@ -1,5 +1,5 @@
 import React from 'react';
-import './sidebar.css';
+import './Sidebar.css';
 
 function scrollToPanel(id) {
   const el = document.getElementById(id);
