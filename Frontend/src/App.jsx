@@ -118,7 +118,7 @@ function Shell() {
           <Capabilities />
           <CaseStudy />
           <Skillset />
-          <Showreel />
+          {/* <Showreel /> */}
           {/* <UnderTheHood /> */}
           <Testimonials />
           <FAQ />

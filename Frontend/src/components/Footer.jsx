@@ -98,17 +98,30 @@ export default function Footer({ onNavigate }) {
               &gt; LinkedIn
             </a>
 
-            <a href="https://www.linkedin.com/company/arthirmus/?viewAsMember=true&utm_source=chatgpt.com" target="_blank" rel="noreferrer">
+            <a href="https://www.instagram.com/arthirmus?igsh=MWhkYWkzazk4aG94Mw==" target="_blank" rel="noreferrer">
               &gt; Instagram
             </a>
 
-            <a href="https://www.linkedin.com/company/arthirmus/?viewAsMember=true&utm_source=chatgpt.com" target="_blank" rel="noreferrer">
+            <a href="https://x.com/Arthirmus" target="_blank" rel="noreferrer">
               &gt; X (Twitter)
             </a>
 
-            <a href="mailto:support@codeutil.ai">
-              &gt; support@codeutil.ai
+            <a href="mailto:arthirmus@gmail.com">
+              &gt; arthirmus@gmail.com
             </a>
+
+            <div style={{
+              marginTop: "0.75rem",
+              padding: "0.6rem 0.75rem",
+              border: "1px solid rgba(0, 255, 170, 0.35)",
+              borderRadius: "6px",
+              background: "rgba(0, 255, 170, 0.08)",
+              color: "#8fffd2",
+              fontSize: "0.9rem",
+              lineHeight: 1.4
+            }}>
+              For troubleshooting and feedback, contact us at <a href="mailto:arthirmus@gmail.com" style={{ color: "#ffffff", textDecoration: "underline" }}>arthirmus@gmail.com</a>
+            </div>
 
           </div>
 
