@@ -38,6 +38,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
+print("Auth router object:", auth.router)
+print("Auth routes:", [r.path for r in auth.router.routes])
+
+print("Codebase routes:", [r.path for r in codebase_router.routes])
 # Register routers
 app.include_router(auth.router)
 app.include_router(codebase_router)
