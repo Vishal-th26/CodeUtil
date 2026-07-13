@@ -23,7 +23,7 @@ app.add_middleware(
         "http://localhost:5173",
         "http://127.0.0.1:5500",
         "http://localhost:5500",
-        "frontend-production-d68b.up.railway.app"
+        "https://frontend-production-d68b.up.railway.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
