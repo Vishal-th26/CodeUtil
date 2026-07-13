@@ -1,4 +1,7 @@
 from rank_bm25 import BM25Okapi
+from embeddings.embedder import get_embeddings
+
+embeddings = get_embeddings()
 
 class BM25Store:
     def __init__(self):
