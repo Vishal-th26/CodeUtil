@@ -2,6 +2,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.routing import APIRoute
 
 from app.db.base import Base
 from app.db.session import engine
@@ -21,9 +22,25 @@ app = FastAPI(
 print("========== APP STARTED ==========")
 print(__file__)
 
+print("\n========== IMPORT CHECK ==========")
+print("Auth module:", auth.__file__)
+print("Auth router:", auth.router)
+print("Auth router routes:")
+for r in auth.router.routes:
+    print(f"  {type(r).__name__:<20} {getattr(r, 'path', 'NO PATH')}")
+
+print("\nCodebase router routes:")
+for r in codebase_router.routes:
+    print(f"  {type(r).__name__:<20} {getattr(r, 'path', 'NO PATH')}")
+print("==================================\n")
+
+
 def _parse_origins(raw_value: str | None) -> list[str]:
     if not raw_value:
-        return ["http://localhost:5173", "http://127.0.0.1:5173"]
+        return [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+        ]
     return [origin.strip() for origin in raw_value.split(",") if origin.strip()]
 
 
@@ -38,30 +55,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+print("========== BEFORE INCLUDE ==========")
+print("Route count:", len(app.routes))
+print()
 
-
-print("Before auth:", len(app.routes))
-
+print("Including auth router...")
 app.include_router(auth.router)
 
-print("After auth:", len(app.routes))
-print([r.path for r in app.routes])
+print("Route count:", len(app.routes))
+for r in app.routes:
+    print(f"{type(r).__name__:<25} {getattr(r, 'path', 'NO PATH')}")
 
+print("\nIncluding codebase router...")
 app.include_router(codebase_router)
 
-print("After codebase:", len(app.routes))
-print([r.path for r in app.routes])
+print("Route count:", len(app.routes))
+for r in app.routes:
+    print(f"{type(r).__name__:<25} {getattr(r, 'path', 'NO PATH')}")
 
-print("-"*50)
-print(app.include_router)
-print(type(app))
+print("\n========== APP INFO ==========")
+print("App type:", type(app))
+print("include_router:", app.include_router)
+print("==============================")
 
-
-
-
-# Print all registered routes (debug)
-print("\n========== REGISTERED ROUTES ==========")
+print("\n========== FINAL REGISTERED ROUTES ==========")
 for route in app.routes:
-    if hasattr(route, "methods"):
-        print(f"{list(route.methods)}\t{route.path}")
-print("=======================================\n")
+    print("-" * 60)
+    print("Type:", type(route).__name__)
+    print("Path:", getattr(route, "path", "NO PATH"))
+    print("Methods:", getattr(route, "methods", "NO METHODS"))
+    print("Name:", getattr(route, "name", "NO NAME"))
+print("=============================================")
