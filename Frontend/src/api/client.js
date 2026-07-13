@@ -1,4 +1,6 @@
-const DEFAULT_BASE_URL = "http://localhost:8000";
+import { API_BASE_URL } from "../config/api";
+
+const DEFAULT_BASE_URL = API_BASE_URL;
 
 class ApiError extends Error {
   constructor(message, status) {
