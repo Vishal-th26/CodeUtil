@@ -40,13 +40,27 @@ app.add_middleware(
 
 
 
-print("Auth router object:", auth.router)
-print("Auth routes:", [r.path for r in auth.router.routes])
+print("Before auth:", len(app.routes))
 
-print("Codebase routes:", [r.path for r in codebase_router.routes])
-# Register routers
 app.include_router(auth.router)
+
+print("After auth:", len(app.routes))
+print([r.path for r in app.routes])
+
 app.include_router(codebase_router)
+
+print("After codebase:", len(app.routes))
+print([r.path for r in app.routes])
+
+
+
+
+
+
+
+
+
+
 
 # Print all registered routes (debug)
 print("\n========== REGISTERED ROUTES ==========")
