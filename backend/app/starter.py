@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,15 +18,18 @@ app = FastAPI(
     version="1.0.0"
 )
 
+def _parse_origins(raw_value: str | None) -> list[str]:
+    if not raw_value:
+        return ["http://localhost:5173", "http://127.0.0.1:5173"]
+    return [origin.strip() for origin in raw_value.split(",") if origin.strip()]
+
+
+frontend_origins = _parse_origins(os.getenv("FRONTEND_URL"))
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5500",
-        "http://localhost:5500",
-        "https://frontend-production-d68b.up.railway.app"
-    ],
+    allow_origins=frontend_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
