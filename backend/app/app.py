@@ -52,12 +52,9 @@ app.include_router(codebase_router)
 print("After codebase:", len(app.routes))
 print([r.path for r in app.routes])
 
-
-
-
-
-
-
+print("-*50)
+print(app.include_router)
+print(type(app))
 
 
 
