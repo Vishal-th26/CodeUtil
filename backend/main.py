@@ -4,12 +4,14 @@ import re
 from urllib import response
 
 from praiser import codeVisitor
-from embeddings.embedder import embeddings
 from LLM.qroq_client import ask_groq_llm
 from chunker.function_chunker import build_function_chunk
 from retrieval.bm25_store import BM25Store
 from retrieval.faiss_store import FaissStore
 from retrieval.ASK_CodeBase import ask_codebase
+from embeddings.embedder import get_embeddings
+
+embeddings = get_embeddings()
 
 
 MAX_CONTEXT_LENGTH = 5000
