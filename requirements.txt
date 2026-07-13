@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+sqlalchemy
+pydantic
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+langchain-community
+transformers
+torch
+numpy
+faiss-cpu
+rank-bm25
+groq
