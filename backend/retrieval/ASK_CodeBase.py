@@ -1,8 +1,9 @@
 from retrieval.bm25_store import BM25Store
 from retrieval.faiss_store import FaissStore
 from LLM.qroq_client import ask_groq_llm
-from embeddings.embedder import embeddings
+from embeddings.embedder import get_embeddings
 
+embeddings = get_embeddings()
 
 
 
