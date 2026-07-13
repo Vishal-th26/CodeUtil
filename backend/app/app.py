@@ -18,6 +18,9 @@ app = FastAPI(
     version="1.0.0"
 )
 
+print("========== APP STARTED ==========")
+print(__file__)
+
 def _parse_origins(raw_value: str | None) -> list[str]:
     if not raw_value:
         return ["http://localhost:5173", "http://127.0.0.1:5173"]
