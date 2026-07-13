@@ -1,5 +1,10 @@
 import faiss
 import numpy as np
+from embeddings.embedder import get_embeddings
+
+embeddings = get_embeddings()
+
+
 
 class FaissStore:
     def __init__(self, dimension):
