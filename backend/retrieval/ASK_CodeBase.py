@@ -6,31 +6,31 @@ from embeddings.embedder import get_embeddings
 embeddings = get_embeddings()
 
 
-
-def ask_codebase(query,Faiss_store,bm25_store):
+def ask_codebase(query, Faiss_store, bm25_store, k=6, final_k=4):
     query_vector = embeddings.embed_query(query)
 
-    semantic_results = Faiss_store.search(query_vector, k=5)
+    semantic_results = Faiss_store.search(query_vector, k=k)
+    keyword_results = bm25_store.search(query, k=k)
 
-    keyword_results = bm25_store.search(query, k=5)
+    def rrf_merge(*result_lists, rrf_k=60):
+        scores = {}
+        chunk_lookup = {}
+        for results in result_lists:
+            for rank, result in enumerate(results):
+                chunk = result['chunk']
+                uid = (chunk['source_file'], chunk['qualified_name'])
+                chunk_lookup[uid] = chunk
+                scores[uid] = scores.get(uid, 0) + 1.0 / (rrf_k + rank + 1)
+        ranked_uids = sorted(scores, key=scores.get, reverse=True)
+        return [chunk_lookup[uid] for uid in ranked_uids]
+
+    combined = rrf_merge(semantic_results, keyword_results)
+
+    if len(combined) == 0:
+        return "I couldn't find that information in the uploaded codebase."
 
     context = ""
-    combined = []
-    seen = set()
-
-    for result in (
-        semantic_results + keyword_results
-    ):
-        chunk = result['chunk']
-        unique_id = (
-            chunk['source_file'],
-            chunk['qualified_name']  )
-        
-        if unique_id not in seen:
-            combined.append(chunk)
-            seen.add(unique_id)
-        
-    for chunk in combined[:4]:
+    for chunk in combined[:final_k]:
         context += (
             f"FILE: {chunk['source_file']}\n"
             f"FUNCTION: {chunk['qualified_name']}\n"
@@ -38,9 +38,6 @@ def ask_codebase(query,Faiss_store,bm25_store):
             f"{chunk['text']}\n"
             f"{'='*80}\n\n"
         )
-    
-    if len(combined)==0:
-        return "I couldn't find that information in the uploaded codebase."
-    answer = ask_groq_llm(context= context, question= query)
 
+    answer = ask_groq_llm(context=context, question=query)
     return answer
