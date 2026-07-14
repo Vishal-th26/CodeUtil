@@ -24,5 +24,6 @@ pytest
 pytest-cov
 psycopg-binary
 psycopg2-binary
+fastembed
 
 

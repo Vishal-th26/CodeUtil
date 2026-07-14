@@ -5,7 +5,7 @@ from urllib import response
 
 from praiser import codeVisitor
 from LLM.qroq_client import ask_groq_llm
-from chunker.function_chunker import build_function_chunk
+from chunker.function_chunker import build_function_chunk , build_class_chunk , build_import_chunk
 from retrieval.bm25_store import BM25Store
 from retrieval.faiss_store import FaissStore
 from retrieval.ASK_CodeBase import ask_codebase
@@ -20,9 +20,9 @@ MAX_CONTEXT_LENGTH = 5000
 
 
 uploaded_files = [r"D:\codeUtil\student_sample\sample_dataset.py",
-                  r"D:\codeUtil\student_sample\sample_dataset_1.py"
+                  r"D:\codeUtil\student_sample\sample_dataset_1.py"]
 
-]
+
 
 
 
@@ -56,30 +56,30 @@ def build_codebase(uploaded_files):
 
 
 
-def process_file(file_path,all_chunks,faiss_store,bm25_store):
-    with open(file_path,"r", encoding="utf-8") as f:
+def process_file(file_path, all_chunks, faiss_store, bm25_store):
+    with open(file_path, "r", encoding="utf-8") as f:
         code = f.read()
 
     tree = ast.parse(code)
     visitor = codeVisitor(code)
     visitor.visit(tree)
-    
-    
-    for meta in visitor.metadata:
 
-        if meta['type'] != 'function':
-            continue
-        chunk = build_function_chunk(meta, file_path)
-        
+    def index_chunk(chunk):
         all_chunks.append(chunk)
         chunk['source_file'] = file_path
-
-
-
         vector = embeddings.embed_query(chunk['text'])
         faiss_store.add(chunk, vector)
         bm25_store.add(chunk)
 
+    for meta in visitor.metadata:
+        if meta['type'] == ('function','asyncfunction'):
+            index_chunk(build_function_chunk(meta, file_path))
+        elif meta['type'] == 'class':
+            index_chunk(build_class_chunk(meta, file_path))
+        
+        
+    if visitor.imports:
+        index_chunk(build_import_chunk(visitor.imports, file_path))
        
 
 

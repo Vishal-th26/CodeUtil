@@ -30,3 +30,66 @@ code:
     "end_line": func_meta["end_line"],
     "text": chunk_text
     }
+
+
+def build_class_chunk(class_meta,file_path):
+
+    qualified_name = class_meta.get("qualified_name", class_meta['name'])
+
+    chunk_text = f""""
+    File:{file_path}
+    Type: Class
+    Name: {class_meta['name']}
+    Qualified Name: {qualified_name}
+    Start Line: {class_meta['start_line']}
+    End Line: {class_meta['end_line']}
+    
+    code: {class_meta['source_code']}
+    
+    """
+    return {
+    "name": class_meta["name"],
+    "qualified_name": qualified_name,
+    "source_file": file_path,
+    "start_line": class_meta["start_line"],
+    "end_line": class_meta["end_line"],
+    "text": chunk_text
+    }
+
+
+
+def build_import_chunk(imports, file_path):
+    import_lines = []
+    for imp in imports:
+        if "name" in imp:  # from-import: {"module":..., "name":..., "alias":...}
+            line = f"from {imp['module']} import {imp['name']}"
+            if imp.get("alias"):
+                line += f" as {imp['alias']}"
+        else:  # plain import: {"module":..., "alias":...}
+            line = f"import {imp['module']}"
+            if imp.get("alias"):
+                line += f" as {imp['alias']}"
+        import_lines.append(line)
+
+    import_block = "\n".join(import_lines)
+
+    chunk_text = f"""
+File: {file_path}
+Type: Imports
+Qualified Name: {file_path}::imports
+Start Line: 0
+End Line: 0
+
+code:
+{import_block}
+
+"""
+    return {
+        "name": "imports",
+        "qualified_name": f"{file_path}::imports",
+        "source_file": file_path,
+        "start_line": 0,
+        "end_line": 0,
+        "text": chunk_text
+    }
+

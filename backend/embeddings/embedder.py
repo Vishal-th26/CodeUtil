@@ -1,7 +1,4 @@
-import torch
-from langchain_community.embeddings import HuggingFaceEmbeddings
-
-device = "cuda" if torch.cuda.is_available() else "cpu"
+from langchain_community.embeddings import FastEmbedEmbeddings
 
 _embeddings = None
 
@@ -9,10 +6,9 @@ def get_embeddings():
     global _embeddings
 
     if _embeddings is None:
-        _embeddings = HuggingFaceEmbeddings(
+        _embeddings = FastEmbedEmbeddings(
             model_name="BAAI/bge-small-en-v1.5",
-            model_kwargs={"device": device},
-            encode_kwargs={"normalize_embeddings": True},
+            cache_dir="/tmp/fastembed_cache",
         )
 
     return _embeddings

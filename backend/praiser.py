@@ -17,7 +17,7 @@ class codeVisitor(ast.NodeVisitor):
 
     def get_current_function(self):
         for item in reversed(self.scope_stack):
-            if item.get("type") in ("function", "asyncFunction"):
+            if item.get("type") in ("function", "asyncfunction"):
                 return item
         return None
         
@@ -67,7 +67,7 @@ class codeVisitor(ast.NodeVisitor):
         self.handle_any_function(node, "function")
 
     def visit_AsyncFunctionDef(self, node):
-        self.handle_any_function(node, "AsyncFunction")
+        self.handle_any_function(node, "asyncfunction")
 
     def mark_loop_found(self, node):
         current_function = self.get_current_function()
