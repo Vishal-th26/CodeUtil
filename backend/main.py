@@ -19,8 +19,8 @@ MAX_CONTEXT_LENGTH = 5000
 
 
 
-uploaded_files = [r"D:\codeUtil\student_sample\sample_dataset.py",
-                  r"D:\codeUtil\student_sample\sample_dataset_1.py"]
+# uploaded_files = [r"D:\codeUtil\student_sample\sample_dataset.py",
+#                   r"D:\codeUtil\student_sample\sample_dataset_1.py"]
 
 
 
@@ -72,7 +72,7 @@ def process_file(file_path, all_chunks, faiss_store, bm25_store):
         bm25_store.add(chunk)
 
     for meta in visitor.metadata:
-        if meta['type'] == ('function','asyncfunction'):
+        if meta['type'] in ('function','asyncfunction'):
             index_chunk(build_function_chunk(meta, file_path))
         elif meta['type'] == 'class':
             index_chunk(build_class_chunk(meta, file_path))
