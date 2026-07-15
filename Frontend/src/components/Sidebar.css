@@ -1,3 +1,5 @@
+/* Sidebar.css */
+
 .dashboard-sidebar {
   background: rgba(12,12,12,0.95);
   border: 1px solid var(--hairline);
@@ -23,4 +25,41 @@
   opacity: 0.35;
   pointer-events: none;
   cursor: not-allowed;
+}
+
+/* --- Mobile fix: prevent sticky sidebar from pinning over scrolling
+   dashboard content and ghosting/overlapping text (CSS-only, no JSX
+   changes). Below 900px .dashboard-root drops to a single column, so
+   the sidebar must behave like a normal in-flow header block instead
+   of a sticky 80vh rail. --- */
+@media (max-width: 900px) {
+  .dashboard-sidebar {
+    position: static;
+    top: auto;
+    min-height: 0;
+    max-height: none;
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .sidebar-nav a {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .sidebar-bottom {
+    flex-direction: row;
+    margin-top: 12px;
+  }
+
+  .sidebar-bottom .btn {
+    flex: 1;
+  }
 }
