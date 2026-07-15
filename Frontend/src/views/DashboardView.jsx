@@ -6,6 +6,34 @@ import { ApiError } from "../api/client";
 import { useApp } from "../context/AppContext";
 import "./DashboardView.css";
 
+// Lightweight inline-markdown formatter: turns **bold** and `code` spans
+// from LLM-generated answers into real React elements. Intentionally
+// minimal (no lists/headings) since answers are single-paragraph text.
+function formatInlineMarkdown(text) {
+  if (!text || typeof text !== "string") return text;
+  const regex = /\*\*(.+?)\*\*|`(.+?)`/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    if (match[1] !== undefined) {
+      parts.push(<strong key={`b-${key++}`}>{match[1]}</strong>);
+    } else if (match[2] !== undefined) {
+      parts.push(<code key={`c-${key++}`}>{match[2]}</code>);
+    }
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+}
+
 function IndexingAnimation({ fileCount }) {
   const COLS = 12;
   const ROWS = 5;
@@ -240,7 +268,7 @@ function AskPanel({ api, locked }) {
               <span className="ask-answer__dot" />
               answer
             </div>
-            <div className="ask-answer__body">{answer}</div>
+            <div className="ask-answer__body">{formatInlineMarkdown(answer)}</div>
           </div>
         )}
       </div>
@@ -363,7 +391,7 @@ function VivaPanel({ api, locked, resetKey }) {
                 {q.answer && (
                   <div className="viva-card__answer">
                     <span className="viva-card__answer-label mono">answer</span>
-                    <p>{q.answer}</p>
+                    <p>{formatInlineMarkdown(q.answer)}</p>
                   </div>
                 )}
               </div>
