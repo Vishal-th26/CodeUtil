@@ -7,7 +7,6 @@ from fastapi.routing import APIRoute
 from app.db.base import Base
 from app.db.session import engine
 from app.db import models  # noqa: F401
-
 from app.api import auth
 from app.api.codebase import router as codebase_router
 
@@ -40,13 +39,17 @@ def _parse_origins(raw_value: str | None) -> list[str]:
         return [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "https://codeutil-five.vercel.app/#landing",
-            "https://codeutil-five.vercel.app"
+            "https://codeutil-five.vercel.app",
         ]
     return [origin.strip() for origin in raw_value.split(",") if origin.strip()]
 
 
 frontend_origins = _parse_origins(os.getenv("FRONTEND_URL"))
+
+print("========== CORS ORIGINS ==========")
+print("FRONTEND_URL env var:", os.getenv("FRONTEND_URL"))
+print("Resolved allow_origins:", frontend_origins)
+print("===================================\n")
 
 # CORS
 app.add_middleware(
@@ -60,17 +63,14 @@ app.add_middleware(
 print("========== BEFORE INCLUDE ==========")
 print("Route count:", len(app.routes))
 print()
-
 print("Including auth router...")
 app.include_router(auth.router)
-
 print("Route count:", len(app.routes))
 for r in app.routes:
     print(f"{type(r).__name__:<25} {getattr(r, 'path', 'NO PATH')}")
 
 print("\nIncluding codebase router...")
 app.include_router(codebase_router)
-
 print("Route count:", len(app.routes))
 for r in app.routes:
     print(f"{type(r).__name__:<25} {getattr(r, 'path', 'NO PATH')}")
