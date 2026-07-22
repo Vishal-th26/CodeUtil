@@ -13,3 +13,14 @@ numpy
 faiss-cpu
 rank-bm25
 groq
+email-validator
+python-multipart
+httpx
+pytest
+pytest-cov
+psycopg-binary
+psycopg2-binary
+fastembed
+tree-sitter
+tree-sitter-java
+
