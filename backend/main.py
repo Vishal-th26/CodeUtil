@@ -1,15 +1,18 @@
 import ast
 import json
 import re
+import os
 from urllib import response
 
-from praiser import codeVisitor
-from LLM.qroq_client import ask_groq_llm
-from chunker.function_chunker import build_function_chunk , build_class_chunk , build_import_chunk
-from retrieval.bm25_store import BM25Store
-from retrieval.faiss_store import FaissStore
-from retrieval.ASK_CodeBase import ask_codebase
-from embeddings.embedder import get_embeddings
+from backend.Praiser.PythonPraiser import PythonVisitor
+from backend.Praiser.JavaPraiser import JavaVisitor
+from backend.LLM.qroq_client import  ask_groq_qna
+from backend.chunker.Chunker import build_function_chunk , build_class_chunk , build_import_chunk
+from backend.retrieval.bm25_store import BM25Store
+from backend.retrieval.faiss_store import FaissStore
+from backend.retrieval.ASK_CodeBase import ask_codebase_chat, ask_codebase
+from backend.embeddings.embedder import get_embeddings
+
 
 embeddings = get_embeddings()
 
@@ -18,12 +21,17 @@ MAX_CONTEXT_LENGTH = 5000
 
 
 
+def detect_language(file_path):
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"file not found {file_path}")
 
-# uploaded_files = [r"D:\codeUtil\student_sample\sample_dataset.py",
-#                   r"D:\codeUtil\student_sample\sample_dataset_1.py"]
-
-
-
+    if file_path.endswith(".py"):
+        return "python"
+    elif file_path.endswith(".java"):
+        return "java"
+    else:
+        raise ValueError (f"Unsupported file extentions: {file_path}")
+    
 
 
 def build_codebase(uploaded_files):
@@ -60,9 +68,21 @@ def process_file(file_path, all_chunks, faiss_store, bm25_store):
     with open(file_path, "r", encoding="utf-8") as f:
         code = f.read()
 
-    tree = ast.parse(code)
-    visitor = codeVisitor(code)
-    visitor.visit(tree)
+    language = detect_language(file_path=file_path)
+
+
+    if language == "python":
+    
+        tree = ast.parse(code)
+        visitor = PythonVisitor(code)
+        visitor.visit(tree)
+
+    else :
+
+        visitor = JavaVisitor(code)
+        visitor.visit()
+
+
 
     def index_chunk(chunk):
         all_chunks.append(chunk)
@@ -72,7 +92,7 @@ def process_file(file_path, all_chunks, faiss_store, bm25_store):
         bm25_store.add(chunk)
 
     for meta in visitor.metadata:
-        if meta['type'] in ('function','asyncfunction'):
+        if meta['type'] in ('function','asyncfunction', 'constructor'):
             index_chunk(build_function_chunk(meta, file_path))
         elif meta['type'] == 'class':
             index_chunk(build_class_chunk(meta, file_path))
@@ -89,14 +109,15 @@ def generate_viva_questions(all_chunks):
     context = ""
     count = 0
     for chunk in all_chunks:
+
         piece = (
             f"FILE: {chunk['source_file']}\n"
-            f"FUNCTION: {chunk['qualified_name']}\n"
+            f"{chunk['type'].upper()}: {chunk['qualified_name']}\n"
             f"LINES: {chunk['start_line']}-{chunk['end_line']}\n\n"
             f"{chunk['text'][:300]}\n"
             f"{'=' * 80}\n\n"
-            
-)
+        )
+
         count += 1
         print(f"Chunks used: {count}")
         print(f"Chars used: {len(context)}")
@@ -141,7 +162,7 @@ Do not include explanations.
 Do not include any text outside the JSON.
 """
 
-    response = ask_groq_llm(
+    response = ask_groq_qna(
         context=context,
         question=prompt
     )
@@ -187,6 +208,7 @@ Do not include any text outside the JSON.
     response = match.group(0)
 
     questions = json.loads(response)
+    print(json.dumps(questions, indent=2))
     return questions
 
 
@@ -227,7 +249,7 @@ def ask_question(
         faiss_store,
         bm25_store
 ):
-    return ask_codebase(
+    return ask_codebase_chat(
         question,
         faiss_store,
         bm25_store
@@ -240,7 +262,7 @@ if __name__ == "__main__":
 
     paths = [
         r"D:\codeUtil\student_sample\sample_dataset_1.py",
-        r"D:\codeUtil\student_sample\sample_dataset.py"
+        r"D:\codeUtil\student_sample\sample_dataset_2.java"
     ]
 
     engine = build_codebase(paths)

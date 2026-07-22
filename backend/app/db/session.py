@@ -1,5 +1,5 @@
-from app.db.base import Base
-from app.core.config import settings
+from backend.app.db.base import Base
+from backend.app.core.config import settings
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 

@@ -5,18 +5,18 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from fastapi.concurrency import run_in_threadpool
 
-from app.auth.deps import get_current_user
-from app.schemas.codebase import (
+from backend.app.auth.deps import get_current_user
+from backend.app.schemas.codebase import (
     UploadResponse, AskRequest, AskResponse,
     VivaQuestionsResponse, VivaAnswersResponse,
 )
-from app.core.codebase_registry import (
+from backend.app.core.codebase_registry import (
     create_session, touch_and_check_quota, get_session_readonly, delete_session,
     SessionNotFound, SessionExpired, DailyLimitExceeded, SESSION_TTL, DAILY_REQUEST_LIMIT,
 )
 
-from main import build_codebase, generate_viva_questions, generate_viva_answers
-from retrieval.ASK_CodeBase import ask_codebase
+from backend.main import build_codebase, generate_viva_questions, generate_viva_answers
+from backend.retrieval.ASK_CodeBase import ask_codebase
 
 router = APIRouter(prefix="/codebase", tags=["codebase"])
 UPLOAD_DIR = os.path.join(tempfile.gettempdir(), "codeutil_uploads")

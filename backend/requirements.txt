@@ -25,5 +25,7 @@ pytest-cov
 psycopg-binary
 psycopg2-binary
 fastembed
+tree-sitter
+tree-sitter-java
 
 

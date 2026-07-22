@@ -4,7 +4,7 @@ import json
 
 
 
-class codeVisitor(ast.NodeVisitor):
+class PythonVisitor(ast.NodeVisitor):
     
     def __init__(self,source_code):
         self.metadata = []
@@ -208,7 +208,7 @@ if __name__ == "__main__":
 
     tree = ast.parse(code)
 
-    visitor = codeVisitor(code)
+    visitor = PythonVisitor(code)
     visitor.visit(tree)
 
     json_output = json.dumps(visitor.metadata, indent=4)

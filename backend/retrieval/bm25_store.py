@@ -1,5 +1,5 @@
 from rank_bm25 import BM25Okapi
-from embeddings.embedder import get_embeddings
+from backend.embeddings.embedder import get_embeddings
 
 embeddings = get_embeddings()
 

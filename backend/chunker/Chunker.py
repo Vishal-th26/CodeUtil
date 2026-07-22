@@ -1,4 +1,3 @@
-
 def build_function_chunk(func_meta, file_path):
     args = ", ".join(func_meta["args"])
 
@@ -6,9 +5,12 @@ def build_function_chunk(func_meta, file_path):
     loops = "Yes" if func_meta.get("loops") else "No"
     conditions = "Yes" if func_meta.get("has_condition") else "No"
 
+
+    type_label = "Constructor" if func_meta.get("type") == "constructor" else "Function"
+
     chunk_text = f"""
 File: {file_path}
-Type: Function
+Type: {type_label}
 Name: {func_meta['name']}
 Qualified Name: {func_meta['qualified_name']}
 Start Line: {func_meta['start_line']}
@@ -23,6 +25,7 @@ code:
 
 """
     return {
+    "type": type_label,
     "name": func_meta["name"],
     "qualified_name": func_meta["qualified_name"],
     "source_file": file_path,
@@ -48,6 +51,7 @@ def build_class_chunk(class_meta,file_path):
     
     """
     return {
+    "type": "Class",
     "name": class_meta["name"],
     "qualified_name": qualified_name,
     "source_file": file_path,
@@ -65,7 +69,8 @@ def build_import_chunk(imports, file_path):
             line = f"from {imp['module']} import {imp['name']}"
             if imp.get("alias"):
                 line += f" as {imp['alias']}"
-        else:  # plain import: {"module":..., "alias":...}
+        else:  # plain import: {"module":..., "alias":...} - also covers Java's
+               # {"module": "java.util.List", "alias": None} from JavaVisitor
             line = f"import {imp['module']}"
             if imp.get("alias"):
                 line += f" as {imp['alias']}"
@@ -85,6 +90,7 @@ code:
 
 """
     return {
+        "type": "Imports",
         "name": "imports",
         "qualified_name": f"{file_path}::imports",
         "source_file": file_path,
@@ -92,4 +98,3 @@ code:
         "end_line": 0,
         "text": chunk_text
     }
-
